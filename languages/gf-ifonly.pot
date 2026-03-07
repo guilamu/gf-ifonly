@@ -1,0 +1,183 @@
+# Copyright (C) 2026 Guilamu
+# This file is distributed under the GNU Affero General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Gravity Forms IfOnly 0.9.0\n"
+"Report-Msgid-Bugs-To: https://github.com/guilamu/gf-ifonly/issues\n"
+"POT-Creation-Date: 2026-03-07 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Plugin Name of the plugin
+#: gf-ifonly.php
+msgid "Gravity Forms IfOnly"
+msgstr ""
+
+#. Description of the plugin
+msgid "Advanced conditional logic for Gravity Forms — group rules with AND/OR logic for fields, buttons, confirmations, and notifications."
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Configure"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Advanced Logic (IfOnly)"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Enable"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Active"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Inactive"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Show"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Hide"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "this field if"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "all of the following match"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "add another rule"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "remove this rule"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Add rule group (OR)"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "OR"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "AND"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Configure Advanced Logic (IfOnly)"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Group conditions with AND within each group, OR between groups."
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Enter a value"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "To use advanced logic, first create fields that support conditional logic."
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "is"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "is not"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "greater than"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "less than"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "contains"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "does NOT contain"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "starts with"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "ends with"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "in CSV list"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "not in CSV list"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Send"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Do not send"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "this notification if"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Use"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Do not use"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "this confirmation if"
+msgstr ""
+
+#: includes/class-gf-ifonly.php
+msgid "Enable Advanced Logic (IfOnly)"
+msgstr ""
+
+#: gf-ifonly.php
+msgid "🐛 Report a Bug"
+msgstr ""
+
+#: gf-ifonly.php
+msgid "🐛 Report a Bug (install Bug Reporter)"
+msgstr ""
+
+#: includes/class-github-updater.php
+msgid "Unable to rename the update folder. Please retry or update manually."
+msgstr ""

@@ -1,0 +1,186 @@
+# French translation for Gravity Forms IfOnly.
+# Copyright (C) 2026 Guilamu
+# This file is distributed under the GNU Affero General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Gravity Forms IfOnly 0.9.0\n"
+"Report-Msgid-Bugs-To: https://github.com/guilamu/gf-ifonly/issues\n"
+"POT-Creation-Date: 2026-03-07 00:00+0000\n"
+"PO-Revision-Date: 2026-03-07 22:43+0100\n"
+"Last-Translator: Guilamu <guilamu@users.noreply.github.com>\n"
+"Language-Team: French <guilamu@users.noreply.github.com>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. Plugin Name of the plugin
+#: gf-ifonly.php
+msgid "Gravity Forms IfOnly"
+msgstr "Gravity Forms IfOnly"
+
+#. Description of the plugin
+msgid "Advanced conditional logic for Gravity Forms — group rules with AND/OR logic for fields, buttons, confirmations, and notifications."
+msgstr "Logique conditionnelle avancée pour Gravity Forms — regroupez les règles avec une logique ET/OU pour les champs, boutons, confirmations et notifications."
+
+#: includes/class-gf-ifonly.php
+msgid "Configure"
+msgstr "Configurer"
+
+#: includes/class-gf-ifonly.php
+msgid "Advanced Logic (IfOnly)"
+msgstr "Logique avancée (IfOnly)"
+
+#: includes/class-gf-ifonly.php
+msgid "Enable"
+msgstr "Activer"
+
+#: includes/class-gf-ifonly.php
+msgid "Enabled"
+msgstr "Activé"
+
+#: includes/class-gf-ifonly.php
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: includes/class-gf-ifonly.php
+msgid "Active"
+msgstr "Actif"
+
+#: includes/class-gf-ifonly.php
+msgid "Inactive"
+msgstr "Inactif"
+
+#: includes/class-gf-ifonly.php
+msgid "Show"
+msgstr "Afficher"
+
+#: includes/class-gf-ifonly.php
+msgid "Hide"
+msgstr "Masquer"
+
+#: includes/class-gf-ifonly.php
+msgid "this field if"
+msgstr "ce champ si"
+
+#: includes/class-gf-ifonly.php
+msgid "all of the following match"
+msgstr "toutes les conditions suivantes sont remplies"
+
+#: includes/class-gf-ifonly.php
+msgid "add another rule"
+msgstr "ajouter une règle"
+
+#: includes/class-gf-ifonly.php
+msgid "remove this rule"
+msgstr "supprimer cette règle"
+
+#: includes/class-gf-ifonly.php
+msgid "Add rule group (OR)"
+msgstr "Ajouter un groupe de règles (OU)"
+
+#: includes/class-gf-ifonly.php
+msgid "OR"
+msgstr "OU"
+
+#: includes/class-gf-ifonly.php
+msgid "AND"
+msgstr "ET"
+
+#: includes/class-gf-ifonly.php
+msgid "Configure Advanced Logic (IfOnly)"
+msgstr "Configurer la logique avancée (IfOnly)"
+
+#: includes/class-gf-ifonly.php
+msgid "Group conditions with AND within each group, OR between groups."
+msgstr "Regroupez les conditions avec ET au sein de chaque groupe, OU entre les groupes."
+
+#: includes/class-gf-ifonly.php
+msgid "Enter a value"
+msgstr "Saisir une valeur"
+
+#: includes/class-gf-ifonly.php
+msgid "To use advanced logic, first create fields that support conditional logic."
+msgstr "Pour utiliser la logique avancée, créez d'abord des champs compatibles avec la logique conditionnelle."
+
+#: includes/class-gf-ifonly.php
+msgid "is"
+msgstr "est"
+
+#: includes/class-gf-ifonly.php
+msgid "is not"
+msgstr "n'est pas"
+
+#: includes/class-gf-ifonly.php
+msgid "greater than"
+msgstr "supérieur à"
+
+#: includes/class-gf-ifonly.php
+msgid "less than"
+msgstr "inférieur à"
+
+#: includes/class-gf-ifonly.php
+msgid "contains"
+msgstr "contient"
+
+#: includes/class-gf-ifonly.php
+msgid "does NOT contain"
+msgstr "ne contient PAS"
+
+#: includes/class-gf-ifonly.php
+msgid "starts with"
+msgstr "commence par"
+
+#: includes/class-gf-ifonly.php
+msgid "ends with"
+msgstr "se termine par"
+
+#: includes/class-gf-ifonly.php
+msgid "in CSV list"
+msgstr "dans la liste CSV"
+
+#: includes/class-gf-ifonly.php
+msgid "not in CSV list"
+msgstr "pas dans la liste CSV"
+
+#: includes/class-gf-ifonly.php
+msgid "Send"
+msgstr "Envoyer"
+
+#: includes/class-gf-ifonly.php
+msgid "Do not send"
+msgstr "Ne pas envoyer"
+
+#: includes/class-gf-ifonly.php
+msgid "this notification if"
+msgstr "cette notification si"
+
+#: includes/class-gf-ifonly.php
+msgid "Use"
+msgstr "Utiliser"
+
+#: includes/class-gf-ifonly.php
+msgid "Do not use"
+msgstr "Ne pas utiliser"
+
+#: includes/class-gf-ifonly.php
+msgid "this confirmation if"
+msgstr "cette confirmation si"
+
+#: includes/class-gf-ifonly.php
+msgid "Enable Advanced Logic (IfOnly)"
+msgstr "Activer la logique avancée (IfOnly)"
+
+#: gf-ifonly.php
+msgid "🐛 Report a Bug"
+msgstr "🐛 Signaler un bug"
+
+#: gf-ifonly.php
+msgid "🐛 Report a Bug (install Bug Reporter)"
+msgstr "🐛 Signaler un bug (installer Bug Reporter)"
+
+#: includes/class-github-updater.php
+msgid "Unable to rename the update folder. Please retry or update manually."
+msgstr "Impossible de renommer le dossier de mise à jour. Veuillez réessayer ou mettre à jour manuellement."

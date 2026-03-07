@@ -1,0 +1,33 @@
+<aside class="conditional_logic_flyout ifonly_flyout">
+	<button class="conditional_logic_flyout__close" data-js-ifonly-close type="button">
+		<span class="screen-reader-text">Close Advanced Logic Settings</span>
+		<i class="conditional_logic_flyout__close_icon" data-js-ifonly-close></i>
+	</button>
+	<header class="conditional_logic_flyout__head">
+		<div class="conditional_logic_flyout__title">
+			{{ flyoutTitle }}
+		</div>
+		<div class="conditional_logic_flyout__desc">
+			{{ flyoutDesc }}
+		</div>
+	</header>
+	<article class="conditional_logic_flyout__body panel-block-tabs__body--settings" data-js="gform-simplebar">
+		<div class="conditional_logic_flyout__toggle">
+			<span class="conditional_logic_flyout__toggle_label">
+				{{ enableLabel }}
+			</span>
+			<div class="conditional_logic_flyout__toggle_input gform-field__toggle">
+				<span class="gform-settings-input__container">
+					<input type="checkbox" class="gform-field__toggle-input" data-js-ifonly-toggle id="ifonly_toggle_{{ fieldId }}" {{ checked }}>
+					<label class="gform-field__toggle-container" for="ifonly_toggle_{{ fieldId }}">
+						<span class="gform-field__toggle-switch-text screen-reader-text">{{ enabledText }}</span>
+						<span class="gform-field__toggle-switch"></span>
+					</label>
+				</span>
+			</div>
+		</div>
+		<div class="conditional_logic_flyout__main ifonly_flyout__main">
+			{{ main }}
+		</div>
+	</article>
+</aside>

@@ -1,0 +1,16 @@
+<fieldset class="conditional-flyout__main-fields {{ enabledClass }}">
+	<div class="conditional_logic_flyout__action">
+		<select data-js-ifonly-state="actionType">
+			<option value="show" {{ showSelected }}>{{ showText }}</option>
+			<option value="hide" {{ hideSelected }}>{{ hideText }}</option>
+		</select>
+		{{ thisFieldIf }} {{ allMatch }}
+	</div>
+
+	<div class="ifonly_flyout__groups">
+	</div>
+
+	<div class="ifonly_flyout__add-group">
+		<button type="button" class="button button-small" data-js-ifonly-add-group>{{ addGroupText }}</button>
+	</div>
+</fieldset>

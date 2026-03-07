@@ -1,0 +1,137 @@
+/**
+ * Gravity Forms IfOnly — Admin Styles (Form Editor).
+ *
+ * Minimal additions — the flyout, accordion, toggle, rules, and buttons
+ * piggyback on GF's native admin.min.css classes. Only IfOnly-specific
+ * elements (groups, OR separator, AND label, add-group) need custom styles.
+ *
+ * @package GF_IfOnly
+ * @license AGPL-3.0-or-later
+ */
+
+/* ------------------------------------------------------------------ */
+/* Groups wrapper                                                      */
+/* ------------------------------------------------------------------ */
+
+.ifonly_flyout__groups {
+	margin: 12px 0 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Single group                                                        */
+/* ------------------------------------------------------------------ */
+
+.ifonly_group {
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	padding: 10px 12px;
+	background: #fafafa;
+}
+
+/* ------------------------------------------------------------------ */
+/* AND label between rules within a group                              */
+/* ------------------------------------------------------------------ */
+
+.ifonly_group__and-label {
+	display: block;
+	font-size: 11px;
+	color: #757575;
+	font-style: italic;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin: 4px 0 4px 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* OR separator between groups                                         */
+/* ------------------------------------------------------------------ */
+
+.ifonly_or-separator {
+	text-align: center;
+	border-bottom: 1px solid #dcdcde;
+	line-height: 0;
+	margin: 14px 0;
+}
+
+.ifonly_or-separator span {
+	background: #fff;
+	padding: 0 14px;
+	font-size: 12px;
+	color: #757575;
+	font-style: italic;
+}
+
+/* ------------------------------------------------------------------ */
+/* Add group button                                                    */
+/* ------------------------------------------------------------------ */
+
+.ifonly_flyout__add-group {
+	margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Disabled state — hide groups/rules when logic is toggled off        */
+/* ------------------------------------------------------------------ */
+
+.conditional-flyout__main-fields:not(.active) {
+	display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Settings panel list item                                            */
+/* ------------------------------------------------------------------ */
+
+.ifonly-settings-panel {
+	border-top: 1px solid #e0e0e0;
+	padding: 10px 0 0;
+	margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+/* IfOnly sits in its own conditional_logic_wrapper (relocated by JS  */
+/* after the native CL wrapper). Hide the top border so it visually  */
+/* connects to the native CL accordion above.                        */
+/* editor.min.css adds margin-bottom:.9375rem to div.field_setting   */
+/* which collapses through the native wrapper — eat it here.         */
+/* ------------------------------------------------------------------ */
+
+#ifonly_field_setting {
+	margin-top: -.9375rem;
+	margin-bottom: 0;
+}
+
+#ifonly_cl_wrapper .conditional_logic_accordion {
+	margin-top: -1px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Settings page (Notification / Confirmation) — inline rendering.    */
+/* Flyout-specific button refinements are scoped to .conditional_     */
+/* logic_flyout parent in admin.min.css, so replicate them here for   */
+/* the inline context.                                                */
+/* ------------------------------------------------------------------ */
+
+#ifonly_settings_container .conditional_logic_flyout__action,
+#ifonly_settings_container .conditional_logic_flyout__rule {
+	font-size: 0.8125rem;
+}
+
+#ifonly_settings_container .add_field_choice,
+#ifonly_settings_container .delete_field_choice {
+	position: relative;
+	top: 0.5625rem;
+}
+
+#ifonly_settings_container .delete_field_choice {
+	opacity: 0;
+	pointer-events: none;
+}
+
+#ifonly_settings_container .delete_field_choice.active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+#ifonly_settings_container .ifonly_or-separator span {
+	background: #f0f0f1;
+}
