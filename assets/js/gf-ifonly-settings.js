@@ -35,11 +35,9 @@
 		'does_not_contain':  strings.doesNotContain || 'does NOT contain',
 		'starts_with':       strings.startsWith || 'starts with',
 		'ends_with':         strings.endsWith || 'ends with',
-		'in_csv':            strings.inCsv || 'in CSV list',
-		'not_in_csv':        strings.notInCsv || 'not in CSV list',
 	};
 
-	var TEXT_OPERATORS = [ 'contains', 'does_not_contain', 'starts_with', 'ends_with', 'in_csv', 'not_in_csv', '>', '<' ];
+	var TEXT_OPERATORS = [ 'contains', 'does_not_contain', 'starts_with', 'ends_with', '>', '<' ];
 
 	// =====================================================================
 	// Template engine (same as form editor)

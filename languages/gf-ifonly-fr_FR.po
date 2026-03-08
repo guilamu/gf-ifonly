@@ -3,10 +3,10 @@
 # This file is distributed under the GNU Affero General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gravity Forms IfOnly 0.9.9\n"
+"Project-Id-Version: Gravity Forms IfOnly 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/guilamu/gf-ifonly/issues\n"
 "POT-Creation-Date: 2026-03-08 00:00+0000\n"
-"PO-Revision-Date: 2026-03-08 15:18+0100\n"
+"PO-Revision-Date: 2026-03-08 15:12+0100\n"
 "Last-Translator: Guilamu <guilamu@users.noreply.github.com>\n"
 "Language-Team: French <guilamu@users.noreply.github.com>\n"
 "Language: fr_FR\n"
@@ -136,14 +136,6 @@ msgstr "commence par"
 #: includes/class-gf-ifonly.php
 msgid "ends with"
 msgstr "se termine par"
-
-#: includes/class-gf-ifonly.php
-msgid "in CSV list"
-msgstr "dans la liste CSV"
-
-#: includes/class-gf-ifonly.php
-msgid "not in CSV list"
-msgstr "pas dans la liste CSV"
 
 #: includes/class-gf-ifonly.php
 msgid "Send"

@@ -35,12 +35,10 @@
 		'does_not_contain':  strings.doesNotContain || 'does NOT contain',
 		'starts_with':       strings.startsWith || 'starts with',
 		'ends_with':         strings.endsWith || 'ends with',
-		'in_csv':            strings.inCsv || 'in CSV list',
-		'not_in_csv':        strings.notInCsv || 'not in CSV list',
 	};
 
 	// Operators that require a text input instead of a value dropdown.
-	var TEXT_OPERATORS = [ 'contains', 'does_not_contain', 'starts_with', 'ends_with', 'in_csv', 'not_in_csv', '>', '<' ];
+	var TEXT_OPERATORS = [ 'contains', 'does_not_contain', 'starts_with', 'ends_with', '>', '<' ];
 
 	// =====================================================================
 	// renderView — mirrors GF's renderView() template engine

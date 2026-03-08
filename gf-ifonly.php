@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms IfOnly
  * Plugin URI: https://github.com/guilamu/gf-ifonly
  * Description: Advanced conditional logic for Gravity Forms — group rules with AND/OR logic for fields, buttons, confirmations, and notifications.
- * Version: 0.9.9
+ * Version: 1.0.0
  * Author: Guilamu
  * Author URI: https://github.com/guilamu
  * Text Domain: gf-ifonly
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GF_IFONLY_VERSION', '0.9.9' );
+define( 'GF_IFONLY_VERSION', '1.0.0' );
 define( 'GF_IFONLY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GF_IFONLY_URL', plugin_dir_url( __FILE__ ) );
 define( 'GF_IFONLY_FILE', __FILE__ );

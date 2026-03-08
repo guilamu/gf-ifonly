@@ -7,14 +7,12 @@ Advanced conditional logic for Gravity Forms — group rules with AND/OR logic f
 - Create multiple rule groups per field, button, confirmation, or notification
 - Rules within a group are evaluated with **AND** logic
 - Groups are connected with **OR** logic
-- Example: Show field if (Industry **is** Finance **AND** Country **in CSV** Greece,Italy) **OR** (Industry **is** Tech **AND** Email **does NOT contain** .gov)
+- Example: Show field if (Industry **is** Finance **AND** Country **is** Greece) **OR** (Industry **is** Finance **AND** Country **is** Italy) **OR** (Industry **is** Tech **AND** Email **does NOT contain** .gov)
 
 ## Extended Operators
 
 - All standard Gravity Forms operators: is, is not, greater than, less than, contains, starts with, ends with
 - **does NOT contain** — show/hide when a field value does not contain a substring
-- **in CSV** — match against a comma-separated list of values
-- **not in CSV** — exclude matches from a comma-separated list
 
 ## Key Features
 
@@ -102,6 +100,11 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Changelog
 
+### 1.0.0
+- **Breaking:** Removed `in CSV` and `not in CSV` operators. The same logic can be expressed with multiple OR groups using the standard `is` / `is not` operators. Existing saved rules using these operators will be silently ignored.
+- **Architecture:** Frontend evaluation now delegates per-rule matching to Gravity Forms' native `gf_get_field_action()` engine. IfOnly only adds the OR-of-groups layer on top. This aligns with the approach from [David Smith's original snippet](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) and ensures third-party operators registered via GF hooks work inside IfOnly groups.
+- **Improvement:** The `does NOT contain` operator implementation now mirrors the [Gravity Wiz reference](https://gravitywiz.com/) approach: whitelisted via `gform_is_valid_conditional_logic_operator`, evaluated server-side via `gform_is_value_match`, and uses jQuery-based field value reading on the frontend.
+
 ### 0.9.9
 - **Fix:** Frontend field visibility was broken — fields with IfOnly logic remained hidden even when the user selected matching values. Root cause: GF renders radio button choices inside a `<ul id="input_FORMID_FIELDID">` container; `getFieldValue()` found this `<ul>` via `getElementById` and tried to read `.value` on it (which is `undefined`), so radio field values always evaluated as empty. Fixed by checking the element's tag name and only reading `.value` from actual form elements (`input`, `select`, `textarea`).
 - **Fix:** On initial page load, IfOnly fields could have the wrong visibility state because GF's conditional logic init script evaluates rules before the IfOnly filter is registered. A re-evaluation is now triggered immediately after filter registration.
@@ -134,7 +137,7 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 - Initial public release
 - **New:** Grouped conditional logic (AND within groups, OR between groups)
 - **New:** Support for fields, Next button, Submit button, confirmations, and notifications
-- **New:** Extra operators: does NOT contain, in CSV, not in CSV
+- **New:** Extra operator: does NOT contain
 - **New:** Server-side logic re-evaluation during submission
 - **New:** GitHub auto-update support
 - **New:** French translation

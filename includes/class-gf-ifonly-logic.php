@@ -106,6 +106,9 @@ class GF_IfOnly_Logic {
 
 	/**
 	 * Compare a field value against a target using the given operator.
+	 *
+	 * // TODO: migration — existing saved rules with in_csv / not_in_csv operators
+	 * // will silently fail (hit the default => false branch) after this version.
 	 */
 	private static function compare( string $field_value, string $operator, string $target ): bool {
 		$field_lower  = mb_strtolower( $field_value, 'UTF-8' );
@@ -120,22 +123,7 @@ class GF_IfOnly_Logic {
 			'does_not_contain'  => '' === $target || ! str_contains( $field_lower, $target_lower ),
 			'starts_with'       => '' !== $target && str_starts_with( $field_lower, $target_lower ),
 			'ends_with'         => '' !== $target && str_ends_with( $field_lower, $target_lower ),
-			'in_csv'            => self::in_csv( $field_lower, $target_lower ),
-			'not_in_csv'        => ! self::in_csv( $field_lower, $target_lower ),
 			default             => false,
 		};
-	}
-
-	/**
-	 * Check if a value matches any item in a comma-separated list.
-	 */
-	private static function in_csv( string $value, string $csv ): bool {
-		$items = array_map( 'trim', explode( ',', $csv ) );
-		foreach ( $items as $item ) {
-			if ( $item === $value ) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

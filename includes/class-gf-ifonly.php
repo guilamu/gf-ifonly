@@ -44,6 +44,10 @@ class GF_IfOnly extends GFAddOn {
 		add_filter( 'gform_notification', array( $this, 'maybe_suppress_notification' ), 10, 3 );
 		add_filter( 'gform_pre_send_email', array( $this, 'maybe_abort_suppressed_email' ), 10, 4 );
 		add_filter( 'gform_confirmation', array( $this, 'maybe_override_confirmation' ), 10, 4 );
+
+		// "does_not_contain" operator support — whitelist and server-side evaluation.
+		add_filter( 'gform_is_valid_conditional_logic_operator', array( $this, 'whitelist_does_not_contain' ), 10, 2 );
+		add_filter( 'gform_is_value_match', array( $this, 'evaluate_does_not_contain' ), 10, 6 );
 	}
 
 	public function init_admin(): void {
@@ -209,8 +213,6 @@ class GF_IfOnly extends GFAddOn {
 				'doesNotContain'    => __( 'does NOT contain', 'gf-ifonly' ),
 				'startsWith'        => __( 'starts with', 'gf-ifonly' ),
 				'endsWith'          => __( 'ends with', 'gf-ifonly' ),
-				'inCsv'             => __( 'in CSV list', 'gf-ifonly' ),
-				'notInCsv'          => __( 'not in CSV list', 'gf-ifonly' ),
 			),
 		);
 		?>
@@ -545,8 +547,6 @@ class GF_IfOnly extends GFAddOn {
 				'doesNotContain' => __( 'does NOT contain', 'gf-ifonly' ),
 				'startsWith'     => __( 'starts with', 'gf-ifonly' ),
 				'endsWith'       => __( 'ends with', 'gf-ifonly' ),
-				'inCsv'          => __( 'in CSV list', 'gf-ifonly' ),
-				'notInCsv'       => __( 'not in CSV list', 'gf-ifonly' ),
 			),
 		);
 	}
@@ -736,6 +736,29 @@ class GF_IfOnly extends GFAddOn {
 	// ------------------------------------------------------------------
 	// Helpers
 	// ------------------------------------------------------------------
+
+	/**
+	 * Whitelist the "does_not_contain" operator for GF's internal validation.
+	 */
+	public function whitelist_does_not_contain( bool $is_valid, string $operator ): bool {
+		if ( 'does_not_contain' === $operator ) {
+			return true;
+		}
+		return $is_valid;
+	}
+
+	/**
+	 * Evaluate the "does_not_contain" operator on the server side.
+	 *
+	 * Mirrors the Gravity Wiz reference implementation.
+	 */
+	public function evaluate_does_not_contain( bool $is_match, string $field_value, string $target_value, string $operation, $source_field, array $rule ): bool {
+		if ( 'does_not_contain' !== ( $rule['operator'] ?? '' ) || ! empty( $rule['_ifonly_evaluating_dnc'] ) ) {
+			return $is_match;
+		}
+
+		return strpos( $field_value, $target_value ) === false;
+	}
 
 	/**
 	 * Collect all IfOnly logic data from a form's fields.
