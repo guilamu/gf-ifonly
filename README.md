@@ -102,6 +102,9 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Changelog
 
+### 0.9.1
+- **Fix:** After saving the form with the Advanced Logic flyout open, the rule groups were visually cleared (rules disappeared). Groups are now correctly re-rendered when `loadField()` is called while the flyout is already open.
+
 ### 0.9.0
 - Initial public release
 - **New:** Grouped conditional logic (AND within groups, OR between groups)
@@ -113,7 +116,7 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Acknowledgements
 
-The idea and first draft of this plugin originate from [this gist](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) by [David Smith](https://github.com/spivurno) (@spivurno), the boss of [Gravity Wiz](https://gravitywiz.com/). I have been a very happy Gravity Wiz user for more than a decade, and nobody in the WordPress community comes even close to their level of professionalism and their exceptionally stellar support!
+The idea and first draft of this plugin originate from [this gist](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) by [David Smith](https://github.com/spivurno) (@spivurno), the boss of [Gravity Wiz](https://gravitywiz.com/). I have been a very happy Gravity Wiz user for more than a decade, and nobody in the WordPress community comes even close to their level of professionalism and their exceptional, stellar support.
 
 ## License
 

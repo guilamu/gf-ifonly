@@ -191,6 +191,12 @@
 
 		this.renderSidebar();
 		this.renderFlyout();
+
+		// If the flyout is currently open (e.g. after a save), re-render groups
+		// since renderFlyout() replaces the entire flyout innerHTML.
+		if ( this.visible ) {
+			this.renderGroups();
+		}
 	};
 
 	// ------------------------------------------------------------------
