@@ -96,7 +96,7 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 │       ├── input.html                 # Text input template
 │       └── select.html                # Select dropdown template
 └── languages
-    ├── gf-ifonly.pot                   # Translation template
+    ├── gf-ifonly.pot                  # Translation template
     └── gf-ifonly-fr_FR.po             # French translation
 ```
 
