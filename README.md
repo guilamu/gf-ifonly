@@ -2,6 +2,8 @@
 
 Advanced conditional logic for Gravity Forms — group rules with AND/OR logic for fields, buttons, confirmations, and notifications.
 
+![Plugin Screenshot](https://github.com/guilamu/gf-ifonly/blob/main/screenshot.png)
+
 ## Grouped Conditional Logic
 
 - Create multiple rule groups per field, button, confirmation, or notification
