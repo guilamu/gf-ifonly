@@ -156,7 +156,7 @@
 			fieldOptions:    renderFieldOptions( rule ),
 			operatorOptions: renderOperatorOptions( rule ),
 			valueMarkup:     renderRuleValue( rule, ruleIdx ),
-			deleteClass:     state.groups[ groupIdx ].rules.length > 1 ? 'active' : '',
+			deleteClass:     ( state.groups[ groupIdx ].rules.length > 1 || state.groups.length > 1 ) ? 'active' : '',
 			addRuleText:     strings.addRule,
 			removeRuleText:  strings.removeRule,
 		};

@@ -96,11 +96,23 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 │       ├── input.html                 # Text input template
 │       └── select.html                # Select dropdown template
 └── languages
-    ├── gf-ifonly.pot                   # Translation template
+    ├── gf-ifonly.pot                  # Translation template
     └── gf-ifonly-fr_FR.po             # French translation
 ```
 
 ## Changelog
+
+### 0.9.5
+- **Fix:** Notifications were still sent even when IfOnly conditions were not met. Root cause: the `gform_notification` filter fires inside `GFCommon::send_notification()`, but Gravity Forms does not re-check `isActive` after the filter — the email proceeds regardless. Replaced the `isActive = false` approach with a two-hook strategy: `gform_notification` now flags the notification (`ifonly_suppress`), and a new `gform_pre_send_email` callback sets `abort_email = true` for flagged notifications, which is the documented GF mechanism to cancel delivery.
+
+### 0.9.4
+- **Fix:** On notification and confirmation settings pages, IfOnly rules appeared to be lost after clicking the save button (they were actually saved — a page refresh showed them correctly). Root cause: GF's settings framework builds the field HTML *before* running `process_postback()`, and for existing items it does not redirect after save, so the rendered page contained stale data. The POST fallback now always reads from `$_POST` on a save postback instead of only when `$ifonly` was empty.
+
+### 0.9.3
+- **Fix:** The delete (−) button was missing on the sole rule of a group when multiple groups existed, making it impossible to remove an entire group. The button is now shown whenever deletion is meaningful: when the group has more than one rule, or when there is more than one group.
+
+### 0.9.2
+- **Fix:** Translated operator labels containing apostrophes (e.g. French "n'est pas") were rendered as HTML entities (`&#039;`) in the rule editor dropdowns. Replaced `esc_html__()` with `__()` for all strings serialized into the JavaScript configuration object — HTML-escaping is inappropriate for values passed through `wp_json_encode()`.
 
 ### 0.9.1
 - **Fix:** After saving the form with the Advanced Logic flyout open, the rule groups were visually cleared (rules disappeared). Groups are now correctly re-rendered when `loadField()` is called while the flyout is already open.
@@ -116,7 +128,7 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Acknowledgements
 
-The idea and first draft of this plugin originate from [this gist](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) by [David Smith](https://github.com/spivurno) (@spivurno), the boss of [Gravity Wiz](https://gravitywiz.com/). I have been a very happy Gravity Wiz user for more than a decade, and nobody in the WordPress community comes even close to their level of professionalism and their exceptional, stellar support.
+The idea and first draft of this plugin originate from [this gist](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) by [David Smith](https://github.com/spivurno) (@spivurno), the boss of [Gravity Wiz](https://gravitywiz.com/). I have been a very happy Gravity Wiz user for more than a decade, and nobody in the WordPress community comes even close to their level of professionalism and their stellar support!
 
 ## License
 

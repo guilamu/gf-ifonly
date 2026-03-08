@@ -460,7 +460,7 @@
 			fieldOptions:    this.renderFieldOptions( rule ),
 			operatorOptions: this.renderOperatorOptions( rule ),
 			valueMarkup:     this.renderRuleValue( rule, ruleIdx ),
-			deleteClass:     this.state.groups[ groupIdx ].rules.length > 1 ? 'active' : '',
+			deleteClass:     ( this.state.groups[ groupIdx ].rules.length > 1 || this.state.groups.length > 1 ) ? 'active' : '',
 			addRuleText:     strings.addRule,
 			removeRuleText:  strings.removeRule,
 		};

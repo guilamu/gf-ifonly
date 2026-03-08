@@ -3,10 +3,10 @@
 # This file is distributed under the GNU Affero General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gravity Forms IfOnly 0.9.1\n"
+"Project-Id-Version: Gravity Forms IfOnly 0.9.5\n"
 "Report-Msgid-Bugs-To: https://github.com/guilamu/gf-ifonly/issues\n"
 "POT-Creation-Date: 2026-03-08 00:00+0000\n"
-"PO-Revision-Date: 2026-03-07 22:43+0100\n"
+"PO-Revision-Date: 2026-03-08 10:52+0100\n"
 "Last-Translator: Guilamu <guilamu@users.noreply.github.com>\n"
 "Language-Team: French <guilamu@users.noreply.github.com>\n"
 "Language: fr_FR\n"

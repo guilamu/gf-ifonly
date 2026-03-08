@@ -42,6 +42,7 @@ class GF_IfOnly extends GFAddOn {
 		add_filter( 'gform_pre_validation', array( $this, 'apply_server_logic' ) );
 		add_filter( 'gform_pre_submission_filter', array( $this, 'apply_server_logic' ) );
 		add_filter( 'gform_notification', array( $this, 'maybe_suppress_notification' ), 10, 3 );
+		add_filter( 'gform_pre_send_email', array( $this, 'maybe_abort_suppressed_email' ), 10, 4 );
 		add_filter( 'gform_confirmation', array( $this, 'maybe_override_confirmation' ), 10, 4 );
 	}
 
@@ -182,34 +183,34 @@ class GF_IfOnly extends GFAddOn {
 				'configure'         => esc_html__( 'Configure', 'gf-ifonly' ),
 				'advancedLogic'     => esc_html__( 'Advanced Logic (IfOnly)', 'gf-ifonly' ),
 				'enable'            => esc_html__( 'Enable', 'gf-ifonly' ),
-				'enabled'           => esc_html__( 'Enabled', 'gf-ifonly' ),
-				'disabled'          => esc_html__( 'Disabled', 'gf-ifonly' ),
-				'active'            => esc_html__( 'Active', 'gf-ifonly' ),
-				'inactive'          => esc_html__( 'Inactive', 'gf-ifonly' ),
-				'show'              => esc_html__( 'Show', 'gf-ifonly' ),
-				'hide'              => esc_html__( 'Hide', 'gf-ifonly' ),
-				'thisFieldIf'       => esc_html__( 'this field if', 'gf-ifonly' ),
-				'allMatch'          => esc_html__( 'all of the following match', 'gf-ifonly' ),
-				'addRule'           => esc_html__( 'add another rule', 'gf-ifonly' ),
-				'removeRule'        => esc_html__( 'remove this rule', 'gf-ifonly' ),
-				'addGroup'          => esc_html__( 'Add rule group (OR)', 'gf-ifonly' ),
-				'or'                => esc_html__( 'OR', 'gf-ifonly' ),
-				'and'               => esc_html__( 'AND', 'gf-ifonly' ),
-				'flyoutTitle'       => esc_html__( 'Configure Advanced Logic (IfOnly)', 'gf-ifonly' ),
-				'flyoutDesc'        => esc_html__( 'Group conditions with AND within each group, OR between groups.', 'gf-ifonly' ),
-				'enterValue'        => esc_html__( 'Enter a value', 'gf-ifonly' ),
-				'helperText'        => esc_html__( 'To use advanced logic, first create fields that support conditional logic.', 'gf-ifonly' ),
+				'enabled'           => __( 'Enabled', 'gf-ifonly' ),
+				'disabled'          => __( 'Disabled', 'gf-ifonly' ),
+				'active'            => __( 'Active', 'gf-ifonly' ),
+				'inactive'          => __( 'Inactive', 'gf-ifonly' ),
+				'show'              => __( 'Show', 'gf-ifonly' ),
+				'hide'              => __( 'Hide', 'gf-ifonly' ),
+				'thisFieldIf'       => __( 'this field if', 'gf-ifonly' ),
+				'allMatch'          => __( 'all of the following match', 'gf-ifonly' ),
+				'addRule'           => __( 'add another rule', 'gf-ifonly' ),
+				'removeRule'        => __( 'remove this rule', 'gf-ifonly' ),
+				'addGroup'          => __( 'Add rule group (OR)', 'gf-ifonly' ),
+				'or'                => __( 'OR', 'gf-ifonly' ),
+				'and'               => __( 'AND', 'gf-ifonly' ),
+				'flyoutTitle'       => __( 'Configure Advanced Logic (IfOnly)', 'gf-ifonly' ),
+				'flyoutDesc'        => __( 'Group conditions with AND within each group, OR between groups.', 'gf-ifonly' ),
+				'enterValue'        => __( 'Enter a value', 'gf-ifonly' ),
+				'helperText'        => __( 'To use advanced logic, first create fields that support conditional logic.', 'gf-ifonly' ),
 				// Extra operators.
-				'is'                => esc_html__( 'is', 'gf-ifonly' ),
-				'isNot'             => esc_html__( 'is not', 'gf-ifonly' ),
-				'greaterThan'       => esc_html__( 'greater than', 'gf-ifonly' ),
-				'lessThan'          => esc_html__( 'less than', 'gf-ifonly' ),
-				'contains'          => esc_html__( 'contains', 'gf-ifonly' ),
-				'doesNotContain'    => esc_html__( 'does NOT contain', 'gf-ifonly' ),
-				'startsWith'        => esc_html__( 'starts with', 'gf-ifonly' ),
-				'endsWith'          => esc_html__( 'ends with', 'gf-ifonly' ),
-				'inCsv'             => esc_html__( 'in CSV list', 'gf-ifonly' ),
-				'notInCsv'          => esc_html__( 'not in CSV list', 'gf-ifonly' ),
+				'is'                => __( 'is', 'gf-ifonly' ),
+				'isNot'             => __( 'is not', 'gf-ifonly' ),
+				'greaterThan'       => __( 'greater than', 'gf-ifonly' ),
+				'lessThan'          => __( 'less than', 'gf-ifonly' ),
+				'contains'          => __( 'contains', 'gf-ifonly' ),
+				'doesNotContain'    => __( 'does NOT contain', 'gf-ifonly' ),
+				'startsWith'        => __( 'starts with', 'gf-ifonly' ),
+				'endsWith'          => __( 'ends with', 'gf-ifonly' ),
+				'inCsv'             => __( 'in CSV list', 'gf-ifonly' ),
+				'notInCsv'          => __( 'not in CSV list', 'gf-ifonly' ),
 			),
 		);
 		?>
@@ -383,7 +384,11 @@ class GF_IfOnly extends GFAddOn {
 	}
 
 	/**
-	 * Suppress a notification if it has IfOnly logic that evaluates to false.
+	 * Flag a notification for suppression if IfOnly logic says don't send.
+	 *
+	 * Setting isActive = false here has no effect because GF checks isActive
+	 * before the gform_notification filter fires. Instead we set a custom flag
+	 * that is picked up by maybe_abort_suppressed_email() on gform_pre_send_email.
 	 */
 	public function maybe_suppress_notification( array $notification, array $form, array $entry ): array {
 		$ifonly = $notification['ifonlyLogic'] ?? null;
@@ -397,10 +402,24 @@ class GF_IfOnly extends GFAddOn {
 		$should_send = ( 'show' === $action ) ? $is_match : ! $is_match;
 
 		if ( ! $should_send ) {
-			$notification['isActive'] = false;
+			$notification['ifonly_suppress'] = true;
 		}
 
 		return $notification;
+	}
+
+	/**
+	 * Abort email delivery for notifications flagged by maybe_suppress_notification().
+	 *
+	 * The gform_pre_send_email filter is the only reliable way to prevent
+	 * GF from actually sending the email, via the abort_email flag.
+	 */
+	public function maybe_abort_suppressed_email( array $email, string $message_format, array $notification, $entry ): array {
+		if ( ! empty( $notification['ifonly_suppress'] ) ) {
+			$email['abort_email'] = true;
+		}
+
+		return $email;
 	}
 
 	/**
@@ -449,13 +468,13 @@ class GF_IfOnly extends GFAddOn {
 
 		// Context-aware action labels (matching GF native CL wording).
 		if ( 'notification' === $object_type ) {
-			$show_label     = esc_html__( 'Send', 'gf-ifonly' );
-			$hide_label     = esc_html__( 'Do not send', 'gf-ifonly' );
-			$this_object_if = esc_html__( 'this notification if', 'gf-ifonly' );
+			$show_label     = __( 'Send', 'gf-ifonly' );
+			$hide_label     = __( 'Do not send', 'gf-ifonly' );
+			$this_object_if = __( 'this notification if', 'gf-ifonly' );
 		} else {
-			$show_label     = esc_html__( 'Use', 'gf-ifonly' );
-			$hide_label     = esc_html__( 'Do not use', 'gf-ifonly' );
-			$this_object_if = esc_html__( 'this confirmation if', 'gf-ifonly' );
+			$show_label     = __( 'Use', 'gf-ifonly' );
+			$hide_label     = __( 'Do not use', 'gf-ifonly' );
+			$this_object_if = __( 'this confirmation if', 'gf-ifonly' );
 		}
 
 		return array(
@@ -464,23 +483,23 @@ class GF_IfOnly extends GFAddOn {
 				'show'           => $show_label,
 				'hide'           => $hide_label,
 				'thisFieldIf'    => $this_object_if,
-				'allMatch'       => esc_html__( 'all of the following match', 'gf-ifonly' ),
-				'addRule'        => esc_html__( 'add another rule', 'gf-ifonly' ),
-				'removeRule'     => esc_html__( 'remove this rule', 'gf-ifonly' ),
-				'addGroup'       => esc_html__( 'Add rule group (OR)', 'gf-ifonly' ),
-				'or'             => esc_html__( 'OR', 'gf-ifonly' ),
-				'and'            => esc_html__( 'AND', 'gf-ifonly' ),
-				'enterValue'     => esc_html__( 'Enter a value', 'gf-ifonly' ),
-				'is'             => esc_html__( 'is', 'gf-ifonly' ),
-				'isNot'          => esc_html__( 'is not', 'gf-ifonly' ),
-				'greaterThan'    => esc_html__( 'greater than', 'gf-ifonly' ),
-				'lessThan'       => esc_html__( 'less than', 'gf-ifonly' ),
-				'contains'       => esc_html__( 'contains', 'gf-ifonly' ),
-				'doesNotContain' => esc_html__( 'does NOT contain', 'gf-ifonly' ),
-				'startsWith'     => esc_html__( 'starts with', 'gf-ifonly' ),
-				'endsWith'       => esc_html__( 'ends with', 'gf-ifonly' ),
-				'inCsv'          => esc_html__( 'in CSV list', 'gf-ifonly' ),
-				'notInCsv'       => esc_html__( 'not in CSV list', 'gf-ifonly' ),
+				'allMatch'       => __( 'all of the following match', 'gf-ifonly' ),
+				'addRule'        => __( 'add another rule', 'gf-ifonly' ),
+				'removeRule'     => __( 'remove this rule', 'gf-ifonly' ),
+				'addGroup'       => __( 'Add rule group (OR)', 'gf-ifonly' ),
+				'or'             => __( 'OR', 'gf-ifonly' ),
+				'and'            => __( 'AND', 'gf-ifonly' ),
+				'enterValue'     => __( 'Enter a value', 'gf-ifonly' ),
+				'is'             => __( 'is', 'gf-ifonly' ),
+				'isNot'          => __( 'is not', 'gf-ifonly' ),
+				'greaterThan'    => __( 'greater than', 'gf-ifonly' ),
+				'lessThan'       => __( 'less than', 'gf-ifonly' ),
+				'contains'       => __( 'contains', 'gf-ifonly' ),
+				'doesNotContain' => __( 'does NOT contain', 'gf-ifonly' ),
+				'startsWith'     => __( 'starts with', 'gf-ifonly' ),
+				'endsWith'       => __( 'ends with', 'gf-ifonly' ),
+				'inCsv'          => __( 'in CSV list', 'gf-ifonly' ),
+				'notInCsv'       => __( 'not in CSV list', 'gf-ifonly' ),
 			),
 		);
 	}
@@ -491,17 +510,21 @@ class GF_IfOnly extends GFAddOn {
 	private function render_settings_ifonly_html( string $object_type, $object ): string {
 		$ifonly = is_array( $object ) ? ( $object['ifonlyLogic'] ?? null ) : null;
 
-		// On the POST-save response the object passed to
-		// gform_notification/confirmation_settings_fields may not yet contain
-		// our data (GF builds settings fields before applying
-		// gform_pre_*_save).  Fall back to POST data so the UI correctly
-		// reflects the just-submitted state.
-		if ( empty( $ifonly ) && ! empty( rgpost( 'ifonly_logic_enabled' ) ) ) {
-			$json = rgpost( 'ifonly_logic_object' );
-			$data = is_string( $json ) ? json_decode( stripslashes( $json ), true ) : null;
-			if ( is_array( $data ) && ! empty( $data['groups'] ) ) {
-				$data['enabled'] = true;
-				$ifonly = $this->sanitize_ifonly_logic( $data );
+		// On a save postback the object passed to
+		// gform_notification/confirmation_settings_fields was built BEFORE
+		// process_postback() ran, so it contains STALE data.  Always read
+		// from POST when this is a save request so the UI reflects what the
+		// user just submitted.
+		if ( ! empty( rgpost( 'gform-settings-save' ) ) ) {
+			if ( ! empty( rgpost( 'ifonly_logic_enabled' ) ) ) {
+				$json = rgpost( 'ifonly_logic_object' );
+				$data = is_string( $json ) ? json_decode( stripslashes( $json ), true ) : null;
+				if ( is_array( $data ) && ! empty( $data['groups'] ) ) {
+					$data['enabled'] = true;
+					$ifonly = $this->sanitize_ifonly_logic( $data );
+				}
+			} else {
+				$ifonly = null;
 			}
 		}
 
