@@ -132,10 +132,15 @@
 			// Try standard input element.
 			var input = document.getElementById( 'input_' + formId + '_' + baseId );
 			if ( input ) {
-				if ( input.type === 'checkbox' ) {
-					return input.checked ? input.value : '';
+				var tag = input.tagName.toLowerCase();
+				// Only read .value from actual form elements (input, select, textarea).
+				// Radio/checkbox fields use a <ul> container with this ID — skip it.
+				if ( tag === 'input' || tag === 'select' || tag === 'textarea' ) {
+					if ( input.type === 'checkbox' ) {
+						return input.checked ? input.value : '';
+					}
+					return input.value || '';
 				}
-				return input.value || '';
 			}
 
 			// Radio buttons.
@@ -224,6 +229,19 @@
 
 		// Initialize.
 		self.init();
+
+		// Re-evaluate all IfOnly fields now that our filter is active.
+		// GF's init script runs gf_apply_rules() before our filter is registered,
+		// so fields may have the wrong visibility state.
+		var fieldIds = [];
+		for ( var fid in self.logic ) {
+			if ( self.logic.hasOwnProperty( fid ) ) {
+				fieldIds.push( parseInt( fid, 10 ) );
+			}
+		}
+		if ( fieldIds.length > 0 && typeof gf_apply_rules === 'function' ) {
+			gf_apply_rules( self.formId, fieldIds );
+		}
 	};
 
 } )( jQuery );

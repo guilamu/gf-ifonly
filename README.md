@@ -102,6 +102,10 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Changelog
 
+### 0.9.9
+- **Fix:** Frontend field visibility was broken — fields with IfOnly logic remained hidden even when the user selected matching values. Root cause: GF renders radio button choices inside a `<ul id="input_FORMID_FIELDID">` container; `getFieldValue()` found this `<ul>` via `getElementById` and tried to read `.value` on it (which is `undefined`), so radio field values always evaluated as empty. Fixed by checking the element's tag name and only reading `.value` from actual form elements (`input`, `select`, `textarea`).
+- **Fix:** On initial page load, IfOnly fields could have the wrong visibility state because GF's conditional logic init script evaluates rules before the IfOnly filter is registered. A re-evaluation is now triggered immediately after filter registration.
+
 ### 0.9.8
 - **Fix:** Changing the field dropdown in an IfOnly rule to a choice-based field (radio, select, etc.) displayed the first choice in the value dropdown, but the underlying state kept an empty string — so the saved rule targeted `""` instead of the visible choice. Root cause: after re-rendering, the browser auto-selects the first `<option>` of the new `<select>`, but no `change` event fires, leaving the state stale. Both the settings-page and form-editor scripts now sync state from the actual DOM values after every re-render.
 
