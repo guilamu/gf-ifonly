@@ -102,6 +102,15 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Changelog
 
+### 0.9.8
+- **Fix:** Changing the field dropdown in an IfOnly rule to a choice-based field (radio, select, etc.) displayed the first choice in the value dropdown, but the underlying state kept an empty string — so the saved rule targeted `""` instead of the visible choice. Root cause: after re-rendering, the browser auto-selects the first `<option>` of the new `<select>`, but no `change` event fires, leaving the state stale. Both the settings-page and form-editor scripts now sync state from the actual DOM values after every re-render.
+
+### 0.9.7
+- **Fix:** IfOnly-enabled confirmations were always displayed regardless of whether conditions were met. Root cause: clearing native `conditionalLogic` (v0.9.6) caused GF's `update_confirmation()` to evaluate `null` logic as "always true," selecting the IfOnly confirmation before the `gform_confirmation` filter ran. The old `maybe_override_confirmation()` could only add a confirmation, never reject one GF already picked. Rewritten to (a) detect when GF wrongly selected an IfOnly confirmation whose conditions are not met and fall back to the default, (b) properly handle both message and redirect confirmation types via a new `format_confirmation()` helper.
+
+### 0.9.6
+- **Fix:** Native Conditional Logic and IfOnly could both be active simultaneously on the same notification or confirmation, causing unpredictable behavior (native CL is evaluated first by GF and can silently override IfOnly). When IfOnly is enabled, native CL is now automatically hidden and disabled on the settings page. On save, native `conditionalLogic` data is cleared to prevent server-side conflicts.
+
 ### 0.9.5
 - **Fix:** Notifications were still sent even when IfOnly conditions were not met. Root cause: the `gform_notification` filter fires inside `GFCommon::send_notification()`, but Gravity Forms does not re-check `isActive` after the filter — the email proceeds regardless. Replaced the `isActive = false` approach with a two-hook strategy: `gform_notification` now flags the notification (`ifonly_suppress`), and a new `gform_pre_send_email` callback sets `abort_email = true` for flagged notifications, which is the documented GF mechanism to cancel delivery.
 

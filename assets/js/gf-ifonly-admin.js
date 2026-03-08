@@ -428,6 +428,29 @@
 		for ( var g = 0; g < this.state.groups.length; g++ ) {
 			this.renderRulesForGroup( g );
 		}
+
+		this.syncValuesFromDOM();
+	};
+
+	/**
+	 * After a re-render, the browser auto-selects the first <option> of any
+	 * <select> whose current state value doesn't match an available choice.
+	 * Read the actual DOM values back into state so they stay in sync.
+	 */
+	GFIfOnlyFlyout.prototype.syncValuesFromDOM = function() {
+		var self = this;
+		var groups = this.els.flyout.querySelectorAll( '[data-ifonly-group]' );
+		groups.forEach( function( groupEl ) {
+			var gi = parseInt( groupEl.dataset.ifonlyGroup, 10 );
+			var rules = groupEl.querySelectorAll( '[data-ifonly-rule]' );
+			rules.forEach( function( ruleEl ) {
+				var ri  = parseInt( ruleEl.dataset.ifonlyRule, 10 );
+				var val = ruleEl.querySelector( '[data-js-ifonly-rule="value"]' );
+				if ( val && self.state.groups[ gi ] && self.state.groups[ gi ].rules[ ri ] ) {
+					self.state.groups[ gi ].rules[ ri ].value = val.value;
+				}
+			} );
+		} );
 	};
 
 	GFIfOnlyFlyout.prototype.renderGroup = function( groupIdx ) {

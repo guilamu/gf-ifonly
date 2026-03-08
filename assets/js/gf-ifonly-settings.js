@@ -132,6 +132,26 @@
 		for ( var g = 0; g < state.groups.length; g++ ) {
 			renderRulesForGroup( g );
 		}
+
+		syncValuesFromDOM();
+	}
+
+	/**
+	 * After a re-render, the browser auto-selects the first <option> of any
+	 * <select> whose current state value doesn't match an available choice.
+	 * Read the actual DOM values back into state so they stay in sync.
+	 */
+	function syncValuesFromDOM() {
+		$( '#ifonly_settings_container [data-ifonly-group]' ).each( function() {
+			var gi = parseInt( $( this ).data( 'ifonly-group' ), 10 );
+			$( this ).find( '[data-ifonly-rule]' ).each( function() {
+				var ri   = parseInt( $( this ).data( 'ifonly-rule' ), 10 );
+				var $val = $( this ).find( '[data-js-ifonly-rule="value"]' );
+				if ( $val.length && state.groups[ gi ] && state.groups[ gi ].rules[ ri ] ) {
+					state.groups[ gi ].rules[ ri ].value = $val.val();
+				}
+			} );
+		} );
 	}
 
 	function renderRulesForGroup( groupIdx ) {
@@ -303,6 +323,26 @@
 		var $container = $( '#ifonly_settings_container' );
 		var $checkbox  = $( '#ifonly_logic_enabled' );
 
+		// Native CL elements — hide/disable when IfOnly is active.
+		var $nativeCLWrapper  = $( '#gform_setting_conditionalLogic' );
+		var nativeCLCheckboxId = objectType + '_conditional_logic';
+		var $nativeCLCheckbox = $( '#' + nativeCLCheckboxId );
+
+		function disableNativeCL() {
+			if ( $nativeCLCheckbox.length && $nativeCLCheckbox.is( ':checked' ) ) {
+				$nativeCLCheckbox.prop( 'checked', false );
+				// Trigger GF's toggle to collapse the native CL UI.
+				if ( typeof ToggleConditionalLogic === 'function' ) {
+					ToggleConditionalLogic( false, objectType );
+				}
+			}
+			$nativeCLWrapper.hide();
+		}
+
+		function enableNativeCL() {
+			$nativeCLWrapper.show();
+		}
+
 		// Ensure state has proper defaults.
 		if ( ! state.groups || ! state.groups.length ) {
 			state = getDefaultState();
@@ -316,15 +356,18 @@
 			state.enabled = this.checked;
 			if ( state.enabled ) {
 				$container.show();
+				disableNativeCL();
 				renderAll();
 			} else {
 				$container.hide();
+				enableNativeCL();
 			}
 			serializeState();
 		} );
 
-		// If already enabled, render immediately.
+		// Apply initial state.
 		if ( state.enabled ) {
+			disableNativeCL();
 			renderAll();
 		}
 

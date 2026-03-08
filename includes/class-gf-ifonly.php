@@ -423,14 +423,31 @@ class GF_IfOnly extends GFAddOn {
 	}
 
 	/**
-	 * Override confirmation if it has IfOnly logic.
+	 * Override confirmation based on IfOnly logic.
+	 *
+	 * Two responsibilities:
+	 *  1. If an IfOnly-enabled confirmation matches → use it (override GF's pick).
+	 *  2. If GF selected an IfOnly-enabled confirmation whose conditions are NOT
+	 *     met → fall back to the default confirmation.
+	 *
+	 * Case 2 happens because clearing native conditionalLogic (v0.9.6) causes
+	 * GF to treat the confirmation as "always eligible," selecting it before
+	 * the gform_confirmation filter fires.
 	 */
 	public function maybe_override_confirmation( $confirmation, array $form, array $entry, bool $ajax ) {
 		if ( empty( $form['confirmations'] ) || ! is_array( $form['confirmations'] ) ) {
 			return $confirmation;
 		}
 
+		$selected_id        = rgar( $form['confirmation'] ?? array(), 'id' );
+		$selected_has_ifonly = false;
+		$ifonly_winner       = null;
+
 		foreach ( $form['confirmations'] as $conf ) {
+			if ( ! empty( $conf['isDefault'] ) ) {
+				continue;
+			}
+
 			$ifonly = $conf['ifonlyLogic'] ?? null;
 
 			if ( empty( $ifonly ) || empty( $ifonly['enabled'] ) ) {
@@ -441,12 +458,42 @@ class GF_IfOnly extends GFAddOn {
 			$action     = $ifonly['actionType'] ?? 'show';
 			$should_use = ( 'show' === $action ) ? $is_match : ! $is_match;
 
-			if ( $should_use ) {
-				return GFFormDisplay::get_confirmation_message( $conf, $form, $entry );
+			if ( rgar( $conf, 'id' ) === $selected_id ) {
+				$selected_has_ifonly = true;
+			}
+
+			if ( $should_use && null === $ifonly_winner ) {
+				$ifonly_winner = $conf;
+			}
+		}
+
+		// An IfOnly confirmation matched — use it.
+		if ( $ifonly_winner ) {
+			return $this->format_confirmation( $ifonly_winner, $form, $entry );
+		}
+
+		// GF selected a confirmation with IfOnly, but conditions are not met
+		// — fall back to the default confirmation.
+		if ( $selected_has_ifonly ) {
+			$defaults     = wp_filter_object_list( $form['confirmations'], array( 'isDefault' => true ) );
+			$default_conf = reset( $defaults );
+			if ( $default_conf ) {
+				return $this->format_confirmation( $default_conf, $form, $entry );
 			}
 		}
 
 		return $confirmation;
+	}
+
+	/**
+	 * Format a confirmation array into the value expected by the gform_confirmation filter.
+	 */
+	private function format_confirmation( array $conf, array $form, array $entry ) {
+		if ( rgar( $conf, 'type' ) === 'message' || empty( $conf['type'] ) ) {
+			return GFFormDisplay::get_confirmation_message( $conf, $form, $entry );
+		}
+
+		return array( 'redirect' => GFFormDisplay::get_confirmation_url( $conf, $form, $entry ) );
 	}
 
 	// ------------------------------------------------------------------
@@ -632,6 +679,9 @@ class GF_IfOnly extends GFAddOn {
 
 	/**
 	 * Read IfOnly data from $_POST and attach to the object.
+	 *
+	 * When IfOnly is enabled, native conditional logic is cleared to prevent
+	 * conflicts — both systems cannot be active on the same object.
 	 */
 	private function save_ifonly_from_post( array $object ): array {
 		$enabled = ! empty( rgpost( 'ifonly_logic_enabled' ) );
@@ -640,7 +690,8 @@ class GF_IfOnly extends GFAddOn {
 
 		if ( $enabled && is_array( $data ) && ! empty( $data['groups'] ) ) {
 			$data['enabled'] = true;
-			$object['ifonlyLogic'] = $this->sanitize_ifonly_logic( $data );
+			$object['ifonlyLogic']      = $this->sanitize_ifonly_logic( $data );
+			$object['conditionalLogic'] = null;
 		} else {
 			$object['ifonlyLogic'] = null;
 		}
