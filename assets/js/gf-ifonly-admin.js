@@ -118,11 +118,11 @@
 	 * so it sits as its own section (like Perks) — avoids double-border gap.
 	 */
 	GFIfOnlyFlyout.prototype.relocateFlyout = function() {
-		// Relocate sidebar setting: move #ifonly_field_setting right after the native CL wrapper.
+		// Relocate sidebar setting: move #ifonly_field_setting just before the native CL wrapper.
 		var settingEl = document.getElementById( 'ifonly_field_setting' );
-		var nativeWrapper = settingEl && settingEl.closest( '.conditional_logic_wrapper:not(#ifonly_cl_wrapper)' );
+		var nativeWrapper = settingEl && settingEl.parentNode && settingEl.parentNode.closest( '.conditional_logic_wrapper' );
 		if ( nativeWrapper && nativeWrapper.parentNode ) {
-			nativeWrapper.parentNode.insertBefore( settingEl, nativeWrapper.nextSibling );
+			nativeWrapper.parentNode.insertBefore( settingEl, nativeWrapper );
 		}
 
 		// Relocate flyout container.

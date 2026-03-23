@@ -102,6 +102,9 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 
 ## Changelog
 
+### 1.0.1
+- **Fix:** Bottom border on the active accordion was missing when either the "Advanced Conditional Logic" or the native "Conditional Logic" accordion was selected.
+
 ### 1.0.0
 - **Breaking:** Removed `in CSV` and `not in CSV` operators. The same logic can be expressed with multiple OR groups using the standard `is` / `is not` operators. Existing saved rules using these operators will be silently ignored.
 - **Architecture:** Frontend evaluation now delegates per-rule matching to Gravity Forms' native `gf_get_field_action()` engine. IfOnly only adds the OR-of-groups layer on top. This aligns with the approach from [David Smith's original snippet](https://gist.github.com/spivurno/79f82d340942fd33fa05c263754f8663) and ensures third-party operators registered via GF hooks work inside IfOnly groups.

@@ -154,11 +154,9 @@ class GF_IfOnly extends GFAddOn {
 			return;
 		}
 		?>
-		<div class="ifonly_advanced_setting field_setting" id="ifonly_field_setting">
-			<div class="conditional_logic_wrapper" id="ifonly_cl_wrapper">
-				<div id="ifonly-sidebar-field">
-					<!-- Accordion rendered by JS -->
-				</div>
+		<div class="ifonly_advanced_setting field_setting conditional_logic_wrapper" id="ifonly_field_setting">
+			<div id="ifonly-sidebar-field">
+				<!-- Accordion rendered by JS -->
 			</div>
 		</div>
 		<?php

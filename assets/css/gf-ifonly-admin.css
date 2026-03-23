@@ -88,20 +88,35 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* IfOnly sits in its own conditional_logic_wrapper (relocated by JS  */
-/* after the native CL wrapper). Hide the top border so it visually  */
-/* connects to the native CL accordion above.                        */
-/* editor.min.css adds margin-bottom:.9375rem to div.field_setting   */
-/* which collapses through the native wrapper — eat it here.         */
+/* IfOnly field setting (relocated by JS after the native CL wrapper).*/
 /* ------------------------------------------------------------------ */
 
+.conditional_logic_wrapper {
+	position: relative;
+}
+
+.conditional_logic_wrapper + .conditional_logic_wrapper {
+	margin-top: -1px;
+}
+
+.conditional_logic_wrapper:has(.conditional_logic_accordion.active) {
+	z-index: 2;
+}
+
+.conditional_logic_wrapper:has(.conditional_logic_accordion.active:focus-within) {
+	z-index: 3;
+}
+
 #ifonly_field_setting {
-	margin-top: -.9375rem;
 	margin-bottom: 0;
 }
 
-#ifonly_cl_wrapper .conditional_logic_accordion {
-	margin-top: -1px;
+#ifonly_field_setting .conditional_logic_accordion {
+	margin-top: 0;
+}
+
+#ifonly_field_setting + .conditional_logic_wrapper .conditional_logic_accordion:not(:focus-within) {
+	border-bottom-color: transparent;
 }
 
 /* ------------------------------------------------------------------ */
