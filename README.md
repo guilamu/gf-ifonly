@@ -25,6 +25,16 @@ Advanced conditional logic for Gravity Forms — group rules with AND/OR logic f
 - **Secure:** All input is sanitized and escaped — no raw user data rendered
 - **GitHub Updates:** Automatic updates from GitHub releases
 
+## Changelog
+
+### 1.0.2
+
+- Fixed: Fatal error when `does NOT contain` operator receives a null field value (e.g. unsubmitted radio/checkbox fields evaluated during `gform_pre_render`).
+
+### 1.0.1
+
+- Initial public release.
+
 ## Requirements
 
 - WordPress 6.0 or higher

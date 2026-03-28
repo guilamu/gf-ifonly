@@ -750,12 +750,12 @@ class GF_IfOnly extends GFAddOn {
 	 *
 	 * Mirrors the Gravity Wiz reference implementation.
 	 */
-	public function evaluate_does_not_contain( bool $is_match, string $field_value, string $target_value, string $operation, $source_field, array $rule ): bool {
+	public function evaluate_does_not_contain( bool $is_match, ?string $field_value, string $target_value, string $operation, $source_field, array $rule ): bool {
 		if ( 'does_not_contain' !== ( $rule['operator'] ?? '' ) || ! empty( $rule['_ifonly_evaluating_dnc'] ) ) {
 			return $is_match;
 		}
 
-		return strpos( $field_value, $target_value ) === false;
+		return strpos( (string) $field_value, $target_value ) === false;
 	}
 
 	/**

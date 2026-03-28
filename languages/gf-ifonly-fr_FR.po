@@ -3,10 +3,10 @@
 # This file is distributed under the GNU Affero General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gravity Forms IfOnly 1.0.0\n"
+"Project-Id-Version: Gravity Forms IfOnly 1.0.2\n"
 "Report-Msgid-Bugs-To: https://github.com/guilamu/gf-ifonly/issues\n"
 "POT-Creation-Date: 2026-03-08 00:00+0000\n"
-"PO-Revision-Date: 2026-03-08 15:12+0100\n"
+"PO-Revision-Date: 2026-03-28 14:03+0100\n"
 "Last-Translator: Guilamu <guilamu@users.noreply.github.com>\n"
 "Language-Team: French <guilamu@users.noreply.github.com>\n"
 "Language: fr_FR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.9\n"
 
 #. Plugin Name of the plugin
 #: gf-ifonly.php
