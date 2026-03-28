@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms IfOnly
  * Plugin URI: https://github.com/guilamu/gf-ifonly
  * Description: Advanced conditional logic for Gravity Forms — group rules with AND/OR logic for fields, buttons, confirmations, and notifications.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Guilamu
  * Author URI: https://github.com/guilamu
  * Text Domain: gf-ifonly
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GF_IFONLY_VERSION', '1.0.2' );
+define( 'GF_IFONLY_VERSION', '1.0.3' );
 define( 'GF_IFONLY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'GF_IFONLY_URL', plugin_dir_url( __FILE__ ) );
 define( 'GF_IFONLY_FILE', __FILE__ );
@@ -84,6 +84,15 @@ function gf_ifonly_plugin_row_meta( array $links, string $file ): array {
 			esc_html__( '🐛 Report a Bug (install Bug Reporter)', 'gf-ifonly' )
 		);
 	}
+
+	// "View details" thickbox link — same pattern as WordPress.org-hosted plugins.
+	$links[] = sprintf(
+		'<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
+		esc_url( self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=gf-ifonly&TB_iframe=true&width=772&height=926' ) ),
+		esc_attr__( 'More information about Gravity Forms IfOnly', 'gf-ifonly' ),
+		esc_attr__( 'Gravity Forms IfOnly', 'gf-ifonly' ),
+		esc_html__( 'View details', 'gf-ifonly' )
+	);
 
 	return $links;
 }

@@ -27,6 +27,11 @@ Advanced conditional logic for Gravity Forms — group rules with AND/OR logic f
 
 ## Changelog
 
+### 1.0.3
+
+- Added: "View details" link on the Plugins page opening a modal with Description, Installation, FAQ, and Changelog tabs parsed from README.md.
+- Added: "Requires Gravity Forms" line in the plugin details sidebar.
+
 ### 1.0.2
 
 - Fixed: Fatal error when `does NOT contain` operator receives a null field value (e.g. unsubmitted radio/checkbox fields evaluated during `gform_pre_render`).
@@ -111,6 +116,12 @@ add_filter( 'gf_ifonly_operators', function( $operators ) {
 ```
 
 ## Changelog
+
+### 1.0.3
+- **Feature:** "View details" link on the Plugins page opening a modal with Description, Installation, FAQ, and Changelog tabs parsed from README.md.
+
+### 1.0.2
+- **Fix:** Fatal error when `does NOT contain` operator receives a null field value (e.g. unsubmitted radio/checkbox fields evaluated during `gform_pre_render`).
 
 ### 1.0.1
 - **Fix:** Bottom border on the active accordion was missing when either the "Advanced Conditional Logic" or the native "Conditional Logic" accordion was selected.
