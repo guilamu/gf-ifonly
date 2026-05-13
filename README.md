@@ -1,4 +1,4 @@
-#THIS PLUGINS IS NOT SUPPORTED ANYMORE. 
+# THIS PLUGINS IS NOT SUPPORTED ANYMORE
 
 From now on, please use the amazing ![Advanced Conditional Logic by GravityWiz](https://gravitywiz.com/advanced-conditional-logic-alpha-1/)
 
